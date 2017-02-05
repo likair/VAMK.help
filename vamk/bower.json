@@ -1,0 +1,27 @@
+{
+  "name": "bower.json",
+  "authors": [
+    "Likai Ren <im@likai.ren>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "./app/static/bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "fullcalendar": "^2.7.0",
+    "Chart.js": "^2.0.2",
+    "bootstrap": "^3.3.6",
+    "react": "^15.0.2",
+    "font-awesome": "^4.6.1",
+    "countUp.js": "countup#^1.7.1",
+    "bootstrap-social": "^5.0.0"
+  }
+}

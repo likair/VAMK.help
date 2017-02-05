@@ -1,0 +1,67 @@
+{% if books != None %}  {# login success #}
+    <div id="books" class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Book Name</th>
+                <th>Due Date</th>
+                <th>Renewals</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for book in books %}
+                <tr>
+                    <td>
+                        <input type="checkbox" value="{{ book.value }}" name="{{ book.name }}">
+                    </td>
+                    <td>{{ book.name }}</td>
+                    <td>{{ book.due }}</td>
+                    <td>{{ book.renewals }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <p><a class="btn btn-default" id="renew" role="button">Renew</a></p>
+    <script>
+        $(document).ready(function () {
+            $("#renew").click(function () {
+                var books = {'credentials':{{ credentials|tojson|safe }}, 'books': []};
+                $("input").each(function () {
+                            if ($(this).is(':checked')) {
+                                books['books'].push({'value': $(this).attr('value'), 'name': $(this).attr('name')})
+                            }
+                        }
+                );
+                console.log(books["books"].length);
+                if (books["books"].length > 0) {
+                    $.ajax({
+                        method: "POST",
+                        url: "../api/tritonia/renew",
+                        data: JSON.stringify(books),
+                        contentType: "application/json"
+                    })
+                            .done(function (data) {
+                                $("#books tbody tr").remove();
+                                // update books table
+                                $.each(data.books, function (key, value) {
+                                    $("#books tbody").append('<tr><td><input type="checkbox" value=' + value.value + '></td><td>' + value.name + '</td><td>' + value.due + '</td><td>' + value.renewals + '</td></tr>');
+                                });
+                            })
+                            .fail(function () {
+                                alert("Failed!")
+                            });
+                }
+            })
+        })
+
+    </script>
+{% elif books == [] %}
+    <div class="alert alert-warning" role="alert">No books borrowed.</div>
+{% else %}
+    <div class="alert alert-danger" role="alert">Please fill the <a href="../register">Tritonia Credential</a>!</div>
+
+
+{% endif %}

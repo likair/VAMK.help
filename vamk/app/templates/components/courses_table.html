@@ -1,0 +1,50 @@
+{% if data.courses %}
+    <div>
+        <i class="fa fa-download fa-2x" aria-hidden="true"></i>
+        <a id="a-excel" href="#"><i class="fa fa-file-excel-o fa-2x" aria-hidden="true"></i></a>
+        <a id="a-pdf" href="#"><i id="i-pdf" class="fa fa-file-pdf-o fa-2x" aria-hidden="true"></i></a>
+        <a id="a-png" href="#"><i id="i-pdf" class="fa fa-file-image-o fa-2x" aria-hidden="true"></i></a>
+
+    </div>
+    <div>
+        <table id="tb-course" class="table table-striped tablesorter">
+            <thead>
+            <tr>
+                <th>Course</th>
+                <th>Credit</th>
+                <th>Grade</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for course in data.courses %}
+                {% if course.grade != '-' %}
+                    <tr>
+                        <td>{{ course.name }}</td>
+                        <td>{{ course.credit }}</td>
+                        <td>{{ course.grade }}</td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <script>
+        $(document).ready(function () {
+            $("#tb-course").tablesorter();
+            $("#a-excel").click(function () {
+                $('#tb-course').tableExport({type: 'excel', escape: 'false'});
+            });
+            $("#a-pdf").click(function () {
+                $('#tb-course').tableExport({type: 'pdf', escape: 'false', pdfLeftMargin: 10});
+            });
+            $("#a-png").click(function () {
+                $('#tb-course').tableExport({type: 'png', escape: 'false'});
+            })
+        })
+
+
+    </script>
+{% else %}
+    <div class="alert alert-warning" role="alert">No courses.</div>
+
+{% endif %}

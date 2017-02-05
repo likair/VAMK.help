@@ -1,0 +1,92 @@
+{% extends "layout.html" %}
+{% block title %}VAMK-HELP{% endblock %}
+{% block body %}
+    {{ super() }}
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                        aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#"><i class="fa fa-question-circle" aria-hidden="true"></i>VAMK-HELP(Beta
+                    0.1)</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse nav navbar-nav navbar-right">
+
+                <a class="btn btn-social btn-facebook" id="btn-fb" href="./login/fb">
+                    <span class="fa fa-facebook"></span> Sign in with Facebook
+                </a>
+
+            </div>
+        </div>
+    </nav>
+
+
+    <div id="content">
+        <div class="jumbotron">
+            <div class="container">
+                <h1>Welcome to VAMK-HELP!</h1>
+                <p>VAMK-HELP's mission is to help VAMK students to handle trivial and repeating stuffs, in order to make
+                    life easier.</p>
+                <div class="fb-like" data-href="https://vamk.help/" data-width="250"
+                     data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h2><i class="fa fa-flag" aria-hidden="true"></i> Courses Report</h2>
+                    <p>Only with your student id and password, prepare everything you need for you: GPA, grades pie
+                        chart, courses details. And you can even subscribe our service to get notification when your
+                        grades
+                        updated! </p>
+                </div>
+                <div class="col-md-4">
+                    <h2><i class="fa fa-calendar" aria-hidden="true"></i> Courses Calendar</h2>
+                    <p>Generates courses calendar based on the current courses enrolled in Winha System. Powerful tool
+                        for exchanges students who enrolled courses from different groups.</p>
+                </div>
+                <div class="col-md-4">
+                    <h2><i class="fa fa-book" aria-hidden="true"></i> Tritonia Renewal</h2>
+                    <p>Easy point to renew your books in Tritonia and you can even subscribe our service to help you
+                        renew them automatically.</p>
+                </div>
+            </div>
+            <hr>
+            <footer>
+                <p>&copy; 2016 Likai Ren</p>
+            </footer>
+        </div>
+
+    </div>
+    <div id="loading"><img src={{ url_for('static', filename='assets/images/loading.gif') }}>
+        <p>Please be patient...</p></div>
+
+
+    <script>
+        $(document).ready(function () {
+            $("#btn-fb").click(function () {
+                $("#content").hide();
+                $("#loading").show();
+            });
+
+            // click anywhere to close the collapsed navbar
+            $(document).click(function (event) {
+                var clickover = $(event.target);
+                var $navbar = $(".navbar-collapse");
+                var _opened = $navbar.hasClass("in");
+                if (_opened === true && !clickover.hasClass("navbar-toggle")) {
+                    $navbar.collapse('hide');
+                }
+            });
+        })
+
+
+    </script>
+
+{% endblock %}

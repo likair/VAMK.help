@@ -1,0 +1,68 @@
+{% extends "layout.html" %}
+{% block body %}
+    {{ super() }}
+    <div id="login-overlay" class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">Feed credentials</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <form role="form" action="./api/register" method="post">
+                            <h3>* VAMK credentials:</h3>
+                            <div class="form-group">
+                                <input type="text" placeholder="Student ID..." class="form-control"
+                                       name="stu_id" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="password" placeholder="Student Password..."
+                                       class="form-control"
+                                       name="stu_password" required>
+                            </div>
+                            <div class="form-group">
+                                <label><input type="checkbox" name="checkbox-vamk" value="1">Notify me GPA changes
+                                </label>
+                            </div>
+                            <hr>
+                            <h3>Tritonia credentials (Optional):</h3>
+                            <div class="form-group">
+                                <input type="text" placeholder="Login ID..."
+                                       class="form-control" name="tritonia_id">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" placeholder="Last name..."
+                                       class="form-control" name="tritonia_lastname">
+                            </div>
+                            <div class="form-group">
+                                <input type="password" placeholder="PIN..."
+                                       class="form-control" name="tritonia_pin">
+                            </div>
+                            <div class="form-group">
+                                <label><input type="checkbox" name="checkbox-tritonia" value="1">Help me renew
+                                    automatically</label>
+                            </div>
+                            <button id="btn-continue" type="submit" class="btn">Continue</button>
+                        </form>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div id="loading"><img src={{ url_for('static', filename='assets/images/loading.gif') }}>
+        <p>Please be patient...</p></div>
+    <script>
+        $(document).ready(function () {
+            $("#btn-continue").click(function () {
+                {# check if VAMK credentials are filled #}
+                if ($("input[name='stu_id']").val() && $("input[name='stu_password']").val()) {
+                    $("#login-overlay").hide();
+                    $("#loading").show();
+                }
+            });
+        })
+    </script>
+{% endblock %}

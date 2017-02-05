@@ -1,0 +1,47 @@
+<table class="table table-striped">
+    <tr>
+        <th>Name</th>
+        <td>{{ data.name }}</td>
+    </tr>
+
+    <tr>
+        <th>Student ID</th>
+        <td>{{ data.student_id }}</td>
+    </tr>
+    <tr>
+        <th>Sex</th>
+        <td>{{ data.sex }}</td>
+    </tr>
+    <tr>
+        <th>Degree Programme</th>
+        <td>{{ data.degree_programme }}</td>
+    </tr>
+    <tr>
+        <th>Entering_group</th>
+        <td>{{ data.group[0] }}</td>
+    </tr>
+    <tr>
+        <th>Study Group</th>
+        <td>{{ data.group[1] }}</td>
+    </tr>
+    <tr>
+        <th>Email</th>
+        <td>{{ data.email }}</td>
+    </tr>
+    <tr>
+        <th>Telephone</th>
+        <td>
+            {% for t in data.telephone %}
+                {{ t }}
+            {% endfor %}
+        </td>
+    </tr>
+    <tr>
+        <th>Estimated Study Time</th>
+        <td>{{ data.estimated_study_time }}</td>
+    </tr>
+    <tr>
+        <th>Address</th>
+        <td>{{ data.address }}</td>
+    </tr>
+</table>

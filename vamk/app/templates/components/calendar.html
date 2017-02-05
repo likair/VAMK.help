@@ -1,0 +1,101 @@
+{% if current_courses %}
+    <div id='calendar'></div>
+    <h3 id="current_courses">Current Courses:</h3>
+    <table class="table table-striped">
+        <tr>
+            <th>Course</th>
+            <th>Group</th>
+        </tr>
+        {% for course in current_courses %}
+            {% for c in course.keys() %}
+                <tr>
+                    <td>
+                        {{ c }}
+                    </td>
+                    <td>
+                        <select id="{{ c }}" class="form-control">
+                            {% for group_code in course[c] %}
+                                {% if data.group[1] in group_code %}
+                                    <option value="{{ group_code }}" selected>{{ group_code }}</option>
+                                {% else %}
+                                    <option value="{{ group_code }}">{{ group_code }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                    </td>
+                </tr>
+            {% endfor %}
+        {% endfor %}
+    </table>
+    <p><a class="btn btn-default" id="generate" role="button">Generate Calendar</a></p>
+
+    <script>
+        $(document).ready(function () {
+
+            {%  if courses_calendar %}  {# if the student has generated a calendar before, then load it #}
+
+                $('#calendar').fullCalendar({
+                    header: {
+                        left: 'prev,next today',
+                        center: 'title',
+                        right: 'month,agendaWeek,agendaDay'
+                    },
+                    editable: true,
+                    eventLimit: true,
+                    events: ({{courses_calendar| safe}}).calendar
+                    // events: [{"start": "2016-04-28T05:15Z", "end": "2016-04-28T09:30Z", "title": "Mobiili- ja www-ohjelmointi, T-TK-3TH, A1080:ATK-tila_ Wolffintie 30 (30_ LT)"}]
+
+                });
+
+                $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) { {# Immediately forces the calendar to render whenever the tabs are shown. #}
+                    $('#calendar').fullCalendar('render');
+                });
+
+            {% endif %}
+
+            $('#generate').click(function () {
+
+                // get the courses data
+                var courses = {'courses': []};
+                $("select").each(function () {
+                            courses['courses'].push({'course_name': $(this).attr('id'), 'group_code': $(this).val()})
+                        }
+                );
+
+                $.ajax({
+                    method: "POST",
+                    url: "../api/calendar",
+                    data: JSON.stringify(courses),
+                    contentType: 'application/json'
+                })
+                        .done(function (data) {
+                            $('#calendar').remove();
+
+                            $('#current_courses').before("<div id='calendar'></div>");
+
+                            $('#calendar').fullCalendar({
+                                header: {
+                                    left: 'prev,next today',
+                                    center: 'title',
+                                    right: 'month,agendaWeek,agendaDay'
+                                },
+                                editable: true,
+                                eventLimit: true, // allow "more" link when too many events
+                                events: data['calendar']
+                            });
+
+
+                        })
+                        .fail(function () {
+                            alert("Ajax failed to fetch data")
+                        });
+
+
+            });
+        })
+    </script>
+
+{% else %}
+    <div class="alert alert-warning" role="alert">No current courses.</div>
+
+{% endif %} 

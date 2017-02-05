@@ -1,0 +1,16 @@
+<div id="gpa" class="jumbo"></div>
+<div id="calendar2"></div>
+<script type="text/javascript">
+    //GPA Counting Animation
+    var options = {
+        useEasing: true,
+        useGrouping: true,
+        separator: ',',
+        decimal: '.',
+        prefix: '',
+        suffix: ''
+    };
+    var gpaCountUp = new CountUp("gpa", 0, {{ data.gpa }}, 3, 3, options);
+    gpaCountUp.start();
+
+</script>

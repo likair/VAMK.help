@@ -1,0 +1,45 @@
+<script src="../../static/bower_components/Chart.js/dist/Chart.js"></script>
+<canvas id="chart"></canvas>
+<script>
+    var data = {
+        labels: [
+            "Grade 0",  //courses
+            "Grade 1",
+            "Grade 2",
+            "Grade 3",
+            "Grade 4",
+            "Grade 5"
+        ],
+        datasets: [
+            {
+                data: {{ data.grade_distribution }},
+                backgroundColor: [
+                    "#a6a6a6",
+                    "#FF6384",
+                    "#36A2EB",
+                    "#FFCE56",
+                    "#00cc00",
+                    "#9900ff"
+
+                ],
+                hoverBackgroundColor: [
+                    "#a6a6a6",
+                    "#FF6384",
+                    "#36A2EB",
+                    "#FFCE56",
+                    "#00cc00",
+                    "#9900ff"
+                ]
+            }]
+    };
+    // For a pie chart
+    var ctx = $("#chart");
+    var myPieChart = new Chart(ctx, {
+        type: 'pie',
+        data: data,
+        animation: {
+            animateScale: true
+        }
+    });
+</script>
+
