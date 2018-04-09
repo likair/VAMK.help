@@ -3,4 +3,4 @@ This application was implemented to utilize the Flask web framework to serve the
 
 The services were designed to include course reports, course calendars, Tritonia renewals, and GPA change notifications, automatic book renewals as additional services as well.
 
-Unfortunately, due to the fact that VAMK told me violated the student privacy rule and blocked IP adress outside of Finland, I have shut down the server and website vamk.help.
+Unfortunately, due to the fact that VAMK told me violated the student privacy rule and blocked IP adress outside of Finland, I have shut down the server and website vamk.help. A demo video is [here](https://www.youtube.com/watch?v=jitaFkayvyY).
